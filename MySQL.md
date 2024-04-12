@@ -257,3 +257,45 @@ create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评分时间'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
+## 案例-3
+
+```mysql
+create database if not exists db;
+use db;#使用数据库的名称
+create table sh_student#创建表单
+(
+num int not NULL primary key comment '学号',
+s_name char(8) comment'姓名',
+sex char(2) comment'性别',
+age  tinyint comment'年龄',
+major char(16) comment'专业',
+address char(50) comment'家庭住址'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;   #这里一定是这样 如果只是CHARSET=utf8会报错
+insert into sh_student(num,s_name,sex,age,major,address) values   #添加数据 到表名中 后面的括号不能省略 有点类似传参
+(200809412,'庄小燕','女',24,'计算机','上海市中山北路12号'),
+(200809415,'洪波','男',25,'计算机','青岛市解放路105号'),
+(200109102,'肖辉','男',23,'计算机','杭州市凤起路111号'),
+(200109103,'柳嫣红','女',22,'计算机','上海市邯郸路1066号'),
+(200307121,'张正正','男',20,'应用数学','上海市延安路123号'),
+(2000307122,'李丽','女',21,'应用数学','杭州市解放路56号');
+select *from sh_student;   #选择表单展示所有内容
+alter table sh_student add column datatime INT NOT NULL after address; #用add column语句 在address后面在增加一个数据名为datatime 
+select *from sh_student;   #再次查看表单
+alter table sh_student modify column age int; #修改age一栏的数据类型
+
+use db;
+create table curriculum(
+CourseNum char(4) not NULL primary key comment'课程号',
+CourseName char(20) comment'课程名',
+StudyTime int comment'学时分',
+Credit int comment'学分'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table curriculum add column achievement int default 0;
+alter table curriculum modify column achievement  char(4);
+alter table curriculum change achievement mark char(4) default 0;
+alter table curriculum drop column mark;
+drop table curriculum;#关闭
+rename table db.sh_student to db.sh_Students;#改名
+```
+
